@@ -1,6 +1,8 @@
 package edu.mirea.onebeattrue.coroutineflow.lesson2
 
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 object UsersRepository {
 
@@ -11,8 +13,10 @@ object UsersRepository {
         users.add(user)
     }
 
-    suspend fun loadUsers(): List<String> {
-        delay(10)
-        return users.toList()
+    suspend fun loadUsers(): Flow<List<String>> = flow {
+        while (true) { // ОЧЕНЬ ПЛОХОЕ ВРЕМЕННОЕ РЕШЕНИЕ
+            emit(users.toList())
+            delay(500)
+        }
     }
 }
